@@ -3,10 +3,8 @@ const form = document.getElementById("weather-form");
 const cityInput = document.getElementById("cityInput");
 const weatherResult = document.getElementById("weatherInfo");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const city = cityInput.value.trim();
-  if (city == "") return;
+// Function to fetch weather for a given city
+async function fetchWeather(city) {
 
   try {
     const response = await fetch(
@@ -34,4 +32,18 @@ form.addEventListener("submit", async (e) => {
   } catch (error) {
     weatherResult.innerHTML = `<p style="color:red;">❌ ${error.message}</p>`;
   }
-})
+}
+
+// Listen for form submission
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const city = cityInput.value.trim();
+  if (city) {
+    fetchWeather(city);
+  }
+});
+
+// Load default city (Delhi) when page starts
+window.addEventListener("load", () => {
+  fetchWeather("Delhi");
+});
