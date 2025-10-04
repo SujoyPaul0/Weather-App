@@ -25,6 +25,9 @@ async function fetchWeather(city) {
     const description = data.weather[0].description;
     const icon = data.weather[0].icon;
 
+    // change background dynamically
+    setBackground(condition);
+
     // Build HTML to show the result
     weatherResult.innerHTML = `
     <h2>${data.name}, ${data.sys.country}</h2>
@@ -37,6 +40,29 @@ async function fetchWeather(city) {
   } catch (error) {
     weatherResult.innerHTML = `<p style="color:red;">❌ ${error.message}</p>`;
   }
+}
+
+// Function to fetch weather for a given city
+function setBackground(condition) {
+  const body = document.body;
+  const lower = condition.toLowerCase();
+
+  if (lower.includes("clear")) {
+    body.style.background = "linear-gradient(to right, #f9d423, #ff4e50)";
+  } else if (lower.includes("rain")) {
+    body.style.background = "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)";
+  } else if (lower.includes("cloud")) {
+    body.style.background = "linear-gradient(to right, #bdc3c7, #2c3e50)";
+  } else if (lower.includes("snow")) {
+    body.style.background = "linear-gradient(to right, #83a4d4, #b6fbff)";
+  } else if (lower.includes("storm")) {
+    body.style.background = "linear-gradient(to right, #232526, #414345)";
+  } else {
+    body.style.background = "linear-gradient(to right, #654ea3, #eaafc8)";
+  }
+
+  // smooth transition effect
+  body.style.transition = "background 1s ease";
 }
 
 // Listen for form submission
