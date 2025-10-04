@@ -5,6 +5,11 @@ const weatherResult = document.getElementById("weatherInfo");
 
 // Function to fetch weather for a given city
 async function fetchWeather(city) {
+  // show loading message
+  weatherResult.innerHTML = `
+  <div class="loader"></div>
+  <p style="color:#555;">Fetching weather for <strong>${city}</strong>...</p>
+`;
 
   try {
     const response = await fetch(
